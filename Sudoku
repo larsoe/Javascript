@@ -1,0 +1,40 @@
+console.log("-=sudokusolver=-");
+
+var solution = [
+[   0,  0,  0,  4,  0,  5,  0,  0,  0   ],
+[   0,  9,  0,  8,  0,	1,	0,	7,	0	],
+[	2,	0,	0,	9,	6,	3,	0,	0,	8	],
+[	0,	0,	7,	0,	0,	0,	3,	0,	0	],
+[	5,	0,	8,	0,	0,	0,	4,	0,	1	],
+[	0,	0,	6,	0,	0,	0,	8,	0,	0	],
+[	7,	0,	0,	5,	1,	6,	0,	0,	3	],
+[	0,	4,	0,	7,	0,	2,	0,	5,	0	],
+[	0,	0,	0,	3,	0,	9,	0,	0,	0	]];
+
+var solX = [];
+var solY = [];
+var solSquare = [];
+var X = 1;   // Hvilken rubrikk sjekkes (0 - 8)
+var Y = 1;   // Hvilken rubrikk sjekkes (0 - 8)
+
+for(var i = 0; i < 9; i++){
+    solX[i] = solution[X][i];
+    solY[i] = solution[i][Y];
+    }
+
+for(var i = 0; i < 3; i++){
+    for (var j = 0; j < 3; j++){
+        solSquare.push(solution[X+i][Y+j]);
+        }
+}
+
+
+console.log("Check:"); 
+console.log("SolX:" + " " + solX);
+console.log("SolY:" + " " + solY);
+console.log("SolSquare:" + " " + solSquare);
+console.log(solution[X][Y]);
+
+var allTaken = solX.concat(solY,solSquare);  //variable allTaken will be source for validating a square
+console.log(allTaken);
+console.log("end");
