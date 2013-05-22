@@ -14,19 +14,19 @@ var solution = [
 var solX = [];
 var solY = [];
 var solSquare = [];
-var X = 1; // Hvilken rubrikk sjekkes (0 - 8)
-var Y = 1; // Hvilken rubrikk sjekkes (0 - 8)
+var X = 2; // Hvilken rubrikk sjekkes (0 - 8)
+var Y = 0; // Hvilken rubrikk sjekkes (0 - 8)
 var taken = []; //used numbers
-var free = [];  //possible solutions
+var free = []; //possible solutions
 
 for(var i = 0; i < 9; i++){
     solX[i] = solution[X][i];
     solY[i] = solution[i][Y];
     }
 
-for(var i = 0; i < 3; i++){
-    for (var j = 0; j < 3; j++){
-        solSquare.push(solution[X+i][Y+j]);
+for(var i = (Math.floor(X/3))*3; i < (Math.floor(X/3))*3 + 3; i++){
+    for (var j = (Math.floor(Y/3))*3; j < (Math.floor(Y/3))*3 + 3; j++){
+        solSquare.push(solution[(Math.floor(X/3))*3+i][(Math.floor(X/3))*3+j]);
         }
 }
 
@@ -41,7 +41,7 @@ var allTaken = solX.concat(solY,solSquare); //variable allTaken will be source f
 console.log(allTaken);
 console.log("end");
 
-for (var i = 1; i < 10; i++){       // function to determine if number is taken
+for (var i = 1; i < 10; i++){ // function to determine if number is taken
     if(allTaken.indexOf(i) > 0){
     taken.push(i);
     } else {
@@ -50,5 +50,5 @@ for (var i = 1; i < 10; i++){       // function to determine if number is taken
     
 }
     
-console.log(free)    ;
-console.log(taken)    ;
+console.log(free) ;
+console.log(taken) ;
