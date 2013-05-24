@@ -24,6 +24,7 @@ for(var i = 0; i < 9; i++){
     solY[i] = solution[i][Y];
     }
 
+// Formel for å finne startpunkt er riktig, men utregningen er feil...
 for(var i = (Math.floor(X/3))*3; i < (Math.floor(X/3))*3 + 3; i++){
     for (var j = (Math.floor(Y/3))*3; j < (Math.floor(Y/3))*3 + 3; j++){
         solSquare.push(solution[(Math.floor(X/3))*3+i][(Math.floor(X/3))*3+j]);
