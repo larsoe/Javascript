@@ -11,11 +11,22 @@ var solution = [
 [ 0, 4, 0, 7, 0, 2, 0, 5, 0 ],
 [ 0, 0, 0, 3, 0, 9, 0, 0, 0 ]];
 
+var pencilMarks =  [
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 8, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 8 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 8, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]];
+
 var solX = [];
 var solY = [];
 var solSquare = [];
-var X = 8; // Hvilken rubrikk sjekkes (0 - 8)
-var Y = 8; // Hvilken rubrikk sjekkes (0 - 8)
+var X = 6; // Hvilken rubrikk sjekkes (0 - 8)
+var Y = 6; // Hvilken rubrikk sjekkes (0 - 8)
 var taken = []; //used numbers
 var free = []; //possible solutions
 
@@ -49,6 +60,8 @@ for (var i = 1; i < 10; i++){ // function to determine if number is taken
     }
     
 }
-    
-console.log(free) ;
-console.log(taken) ;
+pencilMarks[X][Y] = free;
+
+console.log("free" + " " + free) ;
+console.log("taken" + " " + taken) ;
+console.log(pencilMarks);
