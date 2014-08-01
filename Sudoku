@@ -1,127 +1,68 @@
-//Processing 2.1
-//Sodukosolver --- work very much in progress
-  
-  
-  int x;
-  int y;
-int[] possible;
-int startSheet[][] = {
+console.log("-=sudokusolver=-");
 
-{0,0,5,0,0,3,0,4,0},
-{0,0,7,0,0,9,1,2,0},
-{0,2,0,0,0,0,0,0,0},
-{0,5,0,8,1,6,0,0,3},
-{4,0,0,3,0,7,0,0,6},
-{1,0,0,4,9,2,0,5,0},
-{0,0,0,0,0,0,0,3,0},
-{0,3,4,5,0,0,8,0,0},
-{0,8,0,2,0,0,9,0,0}};
+var solution = [
+[ 0, 0, 0, 4, 0, 5, 0, 0, 0 ],
+[ 0, 9, 0, 8, 0, 1, 0, 7, 0 ],
+[ 2, 0, 0, 9, 6, 3, 0, 0, 8 ],
+[ 0, 0, 7, 0, 0, 0, 3, 0, 0 ],
+[ 5, 0, 8, 0, 0, 0, 4, 0, 1 ],
+[ 0, 0, 6, 0, 0, 0, 8, 0, 0 ],
+[ 7, 0, 0, 5, 1, 6, 0, 0, 3 ],
+[ 0, 4, 0, 7, 0, 2, 0, 5, 0 ],
+[ 0, 0, 0, 3, 0, 9, 0, 0, 0 ]];
 
+var pencilMarks = [
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 8, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 8 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 8, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]];
 
-PFont f;
-IntList inventory;
+var solX = [];
+var solY = [];
+var solSquare = [];
+var X = 6; // Hvilken rubrikk sjekkes (0 - 8)
+var Y = 6; // Hvilken rubrikk sjekkes (0 - 8)
+var taken = []; //used numbers
+var free = []; //possible solutions
 
-void setup(){
-size(600,300);
-f = createFont("Areal",12,true);
-  
+for(var i = 0; i < 9; i++){
+    solX[i] = solution[X][i];
+    solY[i] = solution[i][Y];
+    }
+
+for(var i = (Math.floor(X/3))*3; i < (Math.floor(X/3))*3 + 3; i++){
+    for (var j = (Math.floor(Y/3))*3; j < (Math.floor(Y/3))*3 + 3; j++){
+        solSquare.push(solution[i][j]);
+        }
 }
 
 
-void draw(){
-  background(200);
-  drawStartSheet();
-  drawSolutionSheet();
-  checkPoss();
-  highlight();
+console.log("Check:");
+console.log("SolX:" + " " + solX);
+console.log("SolY:" + " " + solY);
+console.log("SolSquare:" + " " + solSquare);
+console.log(solution[X][Y]);
+
+var allTaken = solX.concat(solY,solSquare); //variable allTaken will be source for validating a square
+console.log(allTaken);
+console.log("end");
+
+for (var i = 1; i < 10; i++){ // function to determine if number is taken
+    if(allTaken.indexOf(i) > 0){
+    taken.push(i);
+    } else {
+    free.push(i);
+    }
+    
 }
+pencilMarks[X][Y] = free;
 
+console.log("free" + " " + free) ;
+console.log("taken" + " " + taken) ;
+console.log(pencilMarks);
 
-
-void drawStartSheet(){
-  
-  textFont(f,12);
-  fill(0);
-  
-  int a = 20;
-  int b = 20;
-  for (int j = 0; j < 9; j = j+1){
-  for (int i = 0; i < 9; i = i+1){
-  text(startSheet[i][j],a,b);
-  b = b + 20;
-}
-a = a +20;
-b = 20;
-}
-}
-
-void drawSolutionSheet(){
-  line(350,10,350,190);
-  line(410,10,410,190);
-  line(300,125,470,125);
-  line(300,65,470,65);
-  textFont(f,12);
-  fill(0);
-  
-  int a = 300;
-  int b = 20;
-  for (int j = 0; j < 9; j = j+1){
-  for (int i = 0; i < 9; i = i+1){
-  if (startSheet[i][j] != 0){
-  text(startSheet[i][j],a,b);
-  }
-  b = b + 20;
-}
-a = a +20;
-b = 20;
-}
-}
-
-void checkPoss(){
-
-  inventory = new IntList();
-  
-  for (int i = 0; i < 9; i = i+1){              //løkke sjekker hvilke verdier som finnes horisontalt og vertikalt
-   inventory.append(startSheet[x][i]);
-   inventory.append(startSheet[i][y]);
- }
-
-for (int i = floor(y/3)*3; i < floor(y/3)*3 + 3 ; i = i+1){          //for løkke viser hvilke verdier som er i "ruta" 
-  for (int j = floor(x/3)*3; j < floor(x/3)*3 + 3 ; j = j+1){
-    inventory.append(startSheet[i][j]);
-  }}
-  
-inventory.sort();
-
-for (int n = 0; inventory.get(0) == 0; n = 0){ //removes "0" valuies
-  inventory.remove(0);
-}
-
-for (int n = 0; n < inventory.size()-1; n = n +1){ //removes duplicates
-  if (inventory.get(n) == inventory.get(n+1)){
-  inventory.remove(n);
-  }}
-  
-println("test: " + inventory);
-  
-  
-}
-
-
-void highlight(){ //draws a marker on where the mousepointer is
-
-  if (mouseX >= 300 && mouseX <= 470 && mouseY >=20 && mouseY <=185){
-   noStroke();
-    fill(255,150);
-    rect(300,mouseY-5,170,10);
-    rect(mouseX-5,20,10,165);
-    rect(mouseX-10,mouseY-10,20,20);
-  x = (mouseX-300)/(160/8); //determines which cell the mouse hovers over. (165 is the hight of the sheet, 9 is the number of cells)
-  y = (mouseY-20)/(160/8);
-  println(mouseX+ " " + mouseY + " X: " + x + " Y: " + y);
-  
-  
-  stroke(0);
-  fill(0);
-  }
-}
